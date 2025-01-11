@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserCrud;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +20,16 @@ Route::prefix('/admin')->name('admin.')->middleware(['role:admin'])->group(funct
         Route::post('/add/artist',[UserCrud::class,'addArtist'])->name('artist.add');
         Route::post('/add/user',[UserCrud::class,'addUser'])->name('user.add');
         Route::post('/edit/user',[UserCrud::class,'editUsers'])->name('user.edit');
+
+        Route::get('/roles',[RolePermissionController::class,'index'])->name('role');
+        Route::post('/roles/permissions/update',[RolePermissionController::class,'update'])->name('role.update');
+
+        Route::name('permission.')->prefix('/permission')->group(function(){
+            Route::get('/',[PermissionController::class,'index'])->name('index');
+            Route::get('/delete/{id}',[PermissionController::class,'delete'])->name('delete');
+            Route::post('/store',[PermissionController::class,'store'])->name('store');
+            Route::post('/update',[PermissionController::class,'update'])->name('update');
+        });
     });
     Route::prefix('/profile')->group(function(){
         Route::get('/',[ProfileController::class,'index'])->name('profile');
