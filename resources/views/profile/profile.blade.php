@@ -1,11 +1,11 @@
-@extends('layouts.adminLayout.layout')
+@extends('layouts.' . auth()->user()->getRoleNames()->first() . 'Layout.layout')
 @section('page')
 <div class="container-fluid">
     <div class="d-flex flex-column mt-3">
         <div class="container d-flex flex-column mt-5">
             <center>
                 <div class="position-relative overflow-hidden" style="width: clamp(10rem,15vw,20rem); height: clamp(10rem,15vw,20rem)">
-                    <img class="rounded-circle w-100 h-100" src="{{$profile->profile_image}}" alt="Profile Image" style="object-fit: cover;">
+                    <img class="rounded-circle w-100 h-100" height="100" width="100"  src="{{asset('storage/users-avatar/'.auth()->user()->avatar)}}" alt="Profile Image" style="object-fit: cover;">
                     <div class="position-absolute bg-dark d-flex align-items-center justify-content-center rounded-circle shadow-lg"
                          style="z-index: 5; bottom: 10px; right:10%; width: clamp(2rem,1vw,3rem); height: clamp(2rem,1vw,3rem); cursor:pointer"
                          onclick="document.getElementById('fileInput').click();">
@@ -14,7 +14,7 @@
                             <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
                             <path d="m15 5 4 4"/>
                         </svg>
-                        <form action="{{route('admin.avatar')}}" method="POST" class="d-none" id="avatar-form" enctype="multipart/form-data">
+                        <form action="{{route(auth()->user()->getRoleNames()->first().'.avatar')}}" method="POST" class="d-none" id="avatar-form" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{auth()->user()->id}}">
                             <input type="file" name="avatar" id="fileInput" accept="images/*" onchange="document.getElementById('avatar-form').submit();">
@@ -76,6 +76,11 @@
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    @if (auth()->user()->hasRole('artist'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('artist.profile.index')}}">Portfolio</a>
+                    </li>
+                    @endif
                       <li class="nav-item">
                         <a class="nav-link" id="edit-details" href="#">Edit Details</a>
                       </li>
@@ -88,7 +93,7 @@
               </nav>
         </div>
         <div class="container mt-1 mt-md-3 mt-lg-3">
-            <form action="{{route('admin.details.update')}}" method="POST" class="ps-1" id="profile">
+            <form action="{{route(auth()->user()->getRoleNames()->first().'.details.update')}}" method="POST" class="ps-1" id="profile">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" disabled>
                 <input type="hidden" name="id" value="{{auth()->user()->id}}" disabled>
                 <div class="row">

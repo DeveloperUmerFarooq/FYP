@@ -13,7 +13,7 @@ function reloadDataTable(){
     $('#user-table').DataTable().ajax.reload();
 }
 
-function deleteUser(id){
+function deleteUser(url){
     Swal.fire({
         title: "Delete Selected!",
         text:"Are you sure you want to delete this user?",
@@ -27,7 +27,7 @@ function deleteUser(id){
           }
       }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href=`/admin/delete/${id}`
+            window.location.href=`${url}`
         } else if (result.isDenied) {
             toastr.info('User deletion stopped!')
         }
@@ -35,8 +35,18 @@ function deleteUser(id){
 }
 
 function editUser(user){
-    $('#img').attr('src',user['profile']['profile_image'])
+    $('#img').attr('src',userAvatarUrl+'/'+user['avatar'])
     $('#id').val(user['id'])
     $('#Name').val(user['name'])
     $('#Email').val(user['email'])
 }
+ function preview(event){
+    const file=event.target.files[0];
+    if(file){
+        const reader=new FileReader();
+        reader.onload=function(e){
+            $('#img').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(file);
+    }
+ }

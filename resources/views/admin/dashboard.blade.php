@@ -10,7 +10,7 @@ Dashboard-Admin
             <div class="card text-white bg-success mb-3" style="height: max-content">
                 <div class="card-header">Total Sales</div>
                 <div class="card-body">
-                    <h5 class="card-title text-center" style="color: var(--primary)">$1,230</h5>
+                    <h5 class="card-title text-center" style="color: var(--primary)">1,230Rs</h5>
                     <p class="card-text">This month's sales</p>
                 </div>
             </div>

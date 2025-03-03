@@ -11,7 +11,6 @@ class Profile extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'profile_image',
         'bio',
         'cnic',
         'city',
@@ -23,6 +22,6 @@ class Profile extends Model
         'linkedin_link',
     ];
     public function user(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

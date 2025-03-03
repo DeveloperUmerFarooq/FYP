@@ -31,7 +31,7 @@ class ArtistDataTable extends DataTable
             })
             ->addColumn('user',function ($query){
                 return view('admin.user-management.user-column',['user'=>$query]);
-        })
+            })
             ->addColumn('created_at',function($query){
                 return $query->created_at->format('d/m/Y');
             })
